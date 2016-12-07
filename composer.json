@@ -1,0 +1,18 @@
+{
+  "name": "iamvar/nette-security",
+  "description": "This separate component is a part of Single Sign On project. It contains all security logic.",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Vladimir",
+      "email": "iamvar@gmail.com"
+    }
+  ],
+  "require": {
+    "php": ">= 5.4",
+    "nette/nette": ">=2.2.0"
+  },
+  "autoload": {
+    "classmap": ["src/"]
+  }
+}
