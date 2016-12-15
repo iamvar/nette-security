@@ -8,6 +8,10 @@ use Nette\nette\security\IIdentity;
 use Nette\Utils\DateTime;
 use Nette\Utils\Json;
 
+/**
+ * Class IdentitySerializer
+ * Serializes/deserializes identity with jwt
+ */
 class IdentitySerializer implements IIdentitySerializer
 {
 	const IDENTITY_CLAIM_NAME = 'usr';
@@ -69,7 +73,8 @@ class IdentitySerializer implements IIdentitySerializer
 	private function buildClaims(IIdentity $identity)
 	{
 		// set 1 hour expiration
-		$expirationDate = (new DateTime())->add(new \DateInterval('PT1H'));
+		$expirationDate = (new DateTime())
+			->modify('+1 hour');
 
 		$claims = [
 			'iss' => 'iamvar identity provider',
@@ -83,8 +88,9 @@ class IdentitySerializer implements IIdentitySerializer
 	}
 
 	/**
+	 * Makes serialized data from Identity object
 	 * @param IIdentity $identity
-	 * @return mixed
+	 * @return string
      */
 	private function identityToString(IIdentity $identity)
 	{
@@ -101,16 +107,24 @@ class IdentitySerializer implements IIdentitySerializer
 	}
 
 	/**
-	 * @param $data
+	 * Make Identity object from existing serialized data
+	 *
+	 * @param string $data
 	 * @return Identity
      */
 	private function stringToIdentity($data)
 	{
 		$identityData = Json::decode($data, Json::FORCE_ARRAY);
 
+		$userData = NULL;
+
+		if (array_key_exists('data', $identityData)) {
+			$userData = $identityData['data'];
+		}
 		return new Identity(
 			$identityData['id'],
 			$identityData['roles'],
-			array_key_exists('data', $identityData) ? $identityData['data'] : NULL);
+			$userData
+		);
 	}
 }

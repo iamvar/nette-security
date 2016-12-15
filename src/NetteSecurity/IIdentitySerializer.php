@@ -2,12 +2,16 @@
 
 namespace Iamvar\NetteSecurity;
 
-use Nette\nette\security\Identity;
 use Nette\nette\security\IIdentity;
 
+/**
+ * Identity Serializer Interface.
+ */
 interface IIdentitySerializer
 {
 	/**
+	 * Serializes the given identity to the specified output format.
+	 *
 	 * @param IIdentity $identity
 	 * @param $privateKey
 	 * @return string
@@ -15,9 +19,11 @@ interface IIdentitySerializer
 	public function serialize(IIdentity $identity, $privateKey);
 
 	/**
-	 * @param string $jwt
+	 * Deserializes the given token to the Identity.
+	 *
+	 * @param string $token
 	 * @param string|null $publicKey
-	 * @return Identity
+	 * @return IIdentity
 	 */
-	public function deserialize($jwt, $publicKey = NULL);
+	public function deserialize($token, $publicKey = NULL);
 }

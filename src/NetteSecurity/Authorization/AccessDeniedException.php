@@ -4,6 +4,10 @@ namespace Iamvar\NetteSecurity\Authorization;
 
 use Nette\Application\BadRequestException;
 
+/**
+ * Class AccessDeniedException
+ * Specific exception should be used when Access is Denied
+ */
 class AccessDeniedException extends BadRequestException
 {
 	/**

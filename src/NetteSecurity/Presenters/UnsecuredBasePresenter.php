@@ -7,6 +7,9 @@ use Nette\Application\IRouter;
 use Nette\Application\Request;
 use Nette\Application\UI\Presenter;
 
+/**
+ * Presenter for unsecured routes
+ */
 abstract class UnsecuredBasePresenter extends Presenter
 {
 	/**
@@ -15,6 +18,8 @@ abstract class UnsecuredBasePresenter extends Presenter
 	protected $router;
 
 	/**
+	 * Redirect to login page that can be specified in configuration file
+	 *
 	 * @param string|null $redirectUrl
 	 */
 	public function redirectToLogin($redirectUrl = NULL)
@@ -29,6 +34,8 @@ abstract class UnsecuredBasePresenter extends Presenter
 	}
 
 	/**
+	 * Redirect to logout page that can be specified in configuration file
+	 *
 	 * @param string|null $redirectUrl
 	 */
 	public function redirectToLogout($redirectUrl = NULL)
@@ -42,6 +49,8 @@ abstract class UnsecuredBasePresenter extends Presenter
 	}
 
 	/**
+	 * Returns default action url based on configuration file
+	 *
 	 * @return string
 	 */
 	public function getDefaultActionUrl()
@@ -50,6 +59,8 @@ abstract class UnsecuredBasePresenter extends Presenter
 	}
 
 	/**
+	 * Get specific sso parameter from config
+	 *
 	 * @param string $parameter
 	 * @return mixed
 	 */

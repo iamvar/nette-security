@@ -4,21 +4,40 @@ namespace Iamvar\NetteSecurity\Authorization;
 
 use Nette\nette\security\IIdentity;
 
+/**
+ * Class Authorizator
+ * checks that user in allowed or deny lists
+ */
 class Authorizator implements IAuthorizator
 {
-	/** @var array */
+	/**
+	 * List of allowed groups
+	 * @var array
+	 */
 	private $allowedGroups;
 
-	/** @var array */
+	/**
+	 * List of allowed users
+	 * @var array
+	 */
 	private $allowedUsers;
 
-	/** @var array */
+	/**
+	 * List of deny groups
+	 * @var array
+     */
 	private $denyGroups;
 
-	/** @var array */
+	/**
+	 * List of deny users
+	 * @var array
+	 */
 	private $denyUsers;
 
-	/** @var array */
+	/**
+	 * List of routes where permissions lists should be skipped (404 for example)
+	 * @var array
+	 */
 	private $insecureRoutes = [];
 
 	/**
@@ -44,6 +63,7 @@ class Authorizator implements IAuthorizator
 	/**
 	 * @param IIdentity $identity
 	 * @param $route
+	 * @return mixed|void
 	 * @throws AccessDeniedException
 	 */
 	public function authorize(IIdentity $identity, $route)

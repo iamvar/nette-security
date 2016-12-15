@@ -9,6 +9,9 @@ use Nette\Application\IRouter;
 use Nette\Application\Request;
 use Nette\Application\UI\Presenter;
 
+/**
+ * Base class for secured routes (that needs identity to be checked)
+ */
 abstract class SecuredBasePresenter extends UnsecuredBasePresenter
 {
 	/** @var IIdentityResolver */
@@ -18,7 +21,7 @@ abstract class SecuredBasePresenter extends UnsecuredBasePresenter
 	private $authorizator;
 
 	/**
-	 * startup
+	 * Startup
 	 */
 	protected function startup()
 	{
@@ -35,35 +38,16 @@ abstract class SecuredBasePresenter extends UnsecuredBasePresenter
 	}
 
 	/**
-	 * logout action
+	 * Logout action
 	 */
 	public function actionOut()
 	{
 		$this->identityResolver->logout($this);
 	}
 
-	/**
-	 * @param IIdentityResolver $identityResolver
-	 * @throws \Exception
-	 */
-	public function injectIdentityResolver(IIdentityResolver $identityResolver)
-	{
-		if ($this->identityResolver !== NULL) {
-			throw new \Exception('Identity resolver cannot be injected twice.');
-		}
-
-		$this->identityResolver = $identityResolver;
-	}
-
-	/**
-	 * @param IAuthorizator $authorizer
-	 */
-	public function setAuthorizator(IAuthorizator $authorizer)
-	{
-		$this->authorizator = $authorizer;
-	}
-	
     /**
+	 * Checks if user is in a specified group
+	 *
      * @param string $group
      * @return bool
      */
@@ -79,5 +63,18 @@ abstract class SecuredBasePresenter extends UnsecuredBasePresenter
 	public function injectAuthorizator(IAuthorizator $authorizator)
 	{
 		$this->authorizator = $authorizator;
+	}
+
+	/**
+	 * @param IIdentityResolver $identityResolver
+	 * @throws \Exception
+	 */
+	public function injectIdentityResolver(IIdentityResolver $identityResolver)
+	{
+		if ($this->identityResolver !== NULL) {
+			throw new \Exception('Identity resolver cannot be injected twice.');
+		}
+
+		$this->identityResolver = $identityResolver;
 	}
 }

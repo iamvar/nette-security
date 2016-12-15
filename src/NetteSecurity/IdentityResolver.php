@@ -10,6 +10,10 @@ class IdentityResolver implements IIdentityResolver
 	{
 	}
 
+	/**
+	 * If user is not logged in - redirect to login page
+	 * @param SecuredBasePresenter $presenter
+     */
 	public function resolve(SecuredBasePresenter $presenter)
 	{
 		$user = $presenter->getUser();
@@ -18,11 +22,17 @@ class IdentityResolver implements IIdentityResolver
 		}
 	}
 
+	/**
+	 * Logout
+	 * @param SecuredBasePresenter $presenter
+     */
 	public function logout(SecuredBasePresenter $presenter)
 	{
 		$user = $presenter->getUser();
 		$user->logout();
 		$presenter->flashMessage('You have been signed out.');
-		$presenter->redirectToLogout($presenter->getDefaultActionUrl());
+		$presenter->redirectToLogout(
+			$presenter->getDefaultActionUrl()
+		);
 	}
 }

@@ -13,6 +13,9 @@ abstract class AssertionConsumerBasePresenter extends UnsecuredBasePresenter
 	/** @var IIdentitySerializer */
 	protected $identitySerializer;
 
+	/**
+	 * Action where identity request will be processed
+	 */
 	public function actionConsume()
 	{
 		$request = $this->getRequest();
@@ -42,6 +45,7 @@ abstract class AssertionConsumerBasePresenter extends UnsecuredBasePresenter
 
 	/**
 	 * Allows child classes to put some logic when user logged in successfully
+	 *
 	 * @param User $user
 	 */
 	protected function onUserLogin(User $user)

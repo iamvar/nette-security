@@ -4,10 +4,21 @@ namespace Iamvar\NetteSecurity\Util;
 
 use Nette\InvalidArgumentException;
 
+/**
+ * Class JwtEncoder
+ * To encode and decode jwt
+ */
 class JwtEncoder
 {
 	const DEFAULT_ALGO = 'RS256';
 
+	/**
+	 * @param $payload
+	 * @param $key
+	 * @param string $algo
+	 * @return string
+	 * @throws InvalidArgumentException
+     */
 	public function encode($payload, $key, $algo = self::DEFAULT_ALGO)
 	{
 		$header = [
@@ -28,6 +39,12 @@ class JwtEncoder
 		return implode('.', $segments);
 	}
 
+	/**
+	 * @param $jwt
+	 * @param null $key
+	 * @return mixed
+	 * @throws InvalidArgumentException
+     */
 	public function decode($jwt, $key = null)
 	{
 		$tks = explode('.', $jwt);
@@ -60,6 +77,14 @@ class JwtEncoder
 		return $payload;
 	}
 
+	/**
+	 * @param $signature
+	 * @param $input
+	 * @param $key
+	 * @param string $algo
+	 * @return bool
+	 * @throws InvalidArgumentException
+     */
 	private function verifySignature($signature, $input, $key, $algo = 'RS256')
 	{
 		switch ($algo) {
@@ -82,6 +107,13 @@ class JwtEncoder
 		}
 	}
 
+	/**
+	 * @param $input
+	 * @param $key
+	 * @param string $algo
+	 * @return mixed|string
+	 * @throws InvalidArgumentException
+     */
 	private function sign($input, $key, $algo = 'RS256')
 	{
 		switch ($algo) {
@@ -108,6 +140,13 @@ class JwtEncoder
 		}
 	}
 
+	/**
+	 * @param $input
+	 * @param $key
+	 * @param $algo
+	 * @return mixed
+	 * @throws InvalidArgumentException
+     */
 	private function generateRSASignature($input, $key, $algo)
 	{
 		if (!openssl_sign($input, $signature, $key, $algo)) {
@@ -117,6 +156,10 @@ class JwtEncoder
 		return $signature;
 	}
 
+	/**
+	 * @param $data
+	 * @return mixed|string
+     */
 	public function urlSafeB64Encode($data)
 	{
 		$b64 = base64_encode($data);
@@ -127,6 +170,10 @@ class JwtEncoder
 		return $b64;
 	}
 
+	/**
+	 * @param $b64
+	 * @return string
+     */
 	public function urlSafeB64Decode($b64)
 	{
 		$b64 = str_replace(['-', '_'],
